@@ -15,7 +15,7 @@ session_start();
 // define('DBNAME', 'cyberdaystudio_blog_db');
 
 $host = 'localhost';
-$user = 'thanhdz167';
+$user = 'thanhdz2019';
 $pass = 'Thanhdz2022@!';
 $name = 'cyberdaystudio_blog_db';
 

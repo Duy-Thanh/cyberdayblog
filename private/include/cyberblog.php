@@ -19,23 +19,24 @@ $include_lib = "";
 echo "<html>\r\n";
 echo "<head>\r\n";
 
+echo "<link rel=\"stylesheet\" href=\"../../public/style/styles/base16/3024.css\">\r\n";
+
 echo "<style>\r\n";
-echo "body {\r\n";
-echo "	display: block;\r\n";
-echo "}\r\n";
-echo ".alert{display: none;}\r\n";
+echo "body { display: block; } .alert { display: none; }\r\n";
+echo "</style>\r\n";
+
+// Style
+echo "<style>\r\n";
+echo "@import url(https://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic);\r\n";
+echo "code { display: block; font-family: Consolas, Monaco, monospace; font-size: 10pt; overflow-x: auto; padding: 0.5em; scrollbar-width: thin; -moz-tab-size: 4; tab-size: 4; }\r";
+echo " .pre { margin: 0; }\r";
+echo " pre code.hljs { padding: 16px 30px 20px; }\r";
 echo "</style>\r\n";
 
 // JavaScript here
-echo "<script>\r\n";
-echo "function show_alert_div() {\r\n";
-echo "	document.getElementById('alert_div').style.display = \"block\";\r\n";
-echo "}\r\n";
-echo "function hide_alert_div() {\r\n";
-echo "	document.getElementById('alert_div').style.display = \"none\";\r\n";
-echo "}\r\n";
-echo "</script>\r\n";
-
+echo "<script src=\"../../public/js/alert.js\"></script>\r\n";
+echo "<script src=\"../../public/js/highlight.min.js\"></script>\r\n";
+echo "<script src=\"../../public/js/codeblock.js\"></script>\r\n";
 echo "</head>\r\n";
 echo "<body>\r\n";
 
@@ -79,7 +80,6 @@ if (!check_lib_exists("phpseclib", $current_dir, $include_path, $include_lib)) {
 	}
 
 	echo "<br/>\r\n";
-
 	echo "<hr class=\"solid\">\r\n";
 
 	echo "<div id=\"technical_section\">\r\n";
@@ -95,16 +95,20 @@ if (!check_lib_exists("phpseclib", $current_dir, $include_path, $include_lib)) {
 
 	echo "<div id=\"alert_div\" class=\"alert\">\r\n";
 	echo "<br/>\r\n";
-	echo "<p>Success: FALSE</p>\r\n";
-	echo "<p>Current working directory: $current_dir</p>\r\n";
-	echo "<p>Include path: $include_path</p>\r\n";
-	echo "<p>Library name have an error occurred: $libname</p>\r\n";
-	echo "<p>Include directory to $libname: $include_lib</p>\r\n";
+	echo "<pre>\r\n";
+	echo "<code class=\"language\">\r\n";
+	echo "Success: FALSE\r\n";
+	echo "Current working directory: $current_dir\r\n";
+	echo "Include path: $include_path\r\n";
+	echo "Library name have an error occurred: $libname\r\n";
+	echo "Include directory to $libname: $include_lib\r\n";
+	echo "</code>\r\n";
+	echo "</pre>\r\n";
 	echo "</div>\r\n";
 } else {
-	//echo "<p>include_lib: $include_lib</p>\r\n";
 	set_include_path($include_lib);
 	include('bootstrap.php');
+	include('Crypt/RSA.php');
 }
 
 echo "</body>\r\n";
