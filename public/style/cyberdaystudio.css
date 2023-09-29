@@ -110,3 +110,18 @@ body::-webkit-scrollbar-track {
   background-color: transparent;
   border-radius: 0 0 12px 0; /* Rounded corners for the track */
 }
+
+/* FAQ title and FAQ content style */
+.faq-title {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.faq-content {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.content {
+  max-width: 100%;
+}
