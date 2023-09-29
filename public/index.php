@@ -140,5 +140,5 @@ if (checkPublicPrivateKey()) {
 }
 
 // Include our HTML page
-include('./main_page.html');
+include('main_page.html');
 ?>
