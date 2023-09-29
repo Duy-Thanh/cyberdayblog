@@ -121,7 +121,3 @@ body::-webkit-scrollbar-track {
   padding-left: 10px;
   padding-right: 10px;
 }
-
-.content {
-  max-width: 100%;
-}
