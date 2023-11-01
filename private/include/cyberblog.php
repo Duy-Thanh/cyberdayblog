@@ -105,10 +105,6 @@ if (!check_lib_exists("phpseclib", $current_dir, $include_path, $include_lib)) {
 	echo "</code>\r\n";
 	echo "</pre>\r\n";
 	echo "</div>\r\n";
-} else {
-	set_include_path($include_lib);
-	include('bootstrap.php');
-	include('Crypt/RSA.php');
 }
 
 echo "</body>\r\n";
