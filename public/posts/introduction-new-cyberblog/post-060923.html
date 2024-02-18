@@ -2,7 +2,108 @@
 <html lang="en">
     <head>
         <style>
-            body{margin:0}.navbar{overflow:hidden;background-color:#333;position:fixed;top:0;width:100%}.navbar a{float:left;display:block;color:#f2f2f2;text-align:center;padding:14px 16px;text-decoration:none;font-size:20px}.main{margin-top:120px}
+            @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+
+        body {
+            margin: 0;
+        }
+        .navbar {
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: teal;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 20px;
+        }
+        .main {
+            margin-top: 120px;
+        }
+
+        /* Styles for the loading modal */
+        .modal-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000; /* Ensure modal is on top of other content */
+        }
+        /* Styles for the semi-transparent background with blur */
+        .modal-background {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+            inset: -3px;
+            filter: blur(30%);
+            backdrop-filter: blur(10px);
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .center-screen {
+            position: absolute;
+            top: 38%;
+            left: 47.28%;
+            transform: translate(-50%, -50%);
+        }
+        /* Style for the blinking cursor */
+        .blink-cursor {
+            display: inline-block;
+            width: 0.6em; /* Adjust the width as needed */
+            height: 1em;
+            background-color: transparent; /* Change cursor color here */
+            animation: blink-animation 0.8s step-end infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 0; } /* Invisible */
+            50% { opacity: 1; } /* Visible */
+            100% { opacity: 0; } /* Invisible */
+        }
+
+        .blink-animation {
+            animation: blink 0.8s infinite; /* Adjust the animation duration as needed */
+        }
+
+        .typing-animation {
+            display: inline-block;
+        }
+
+        #blog-link:hover {
+            text-decoration: underline;
+        }
+
+        #blog-link:active {
+            text-decoration: underline;
+        }
+
+        #blog-link:visited {
+            text-decoration: none;
+        }
+
+        #blog-link:link {
+            text-decoration: none;
+        }
         </style>
         <title>Introduce CyberBlog and the untold stories behind the scenes | Blog - CyberDay Studio</title>
         <meta charset="utf-8">
@@ -53,48 +154,199 @@
                 padding-left: 3px;
             }
         </style>
+        <script>
+            // Function to show the loader
+			function showLoader() {
+				document.getElementById('modalContainer').style.display = 'flex';
+			}
+
+			// Function to hide the loader
+			function hideLoader() {
+				document.getElementById('modalContainer').style.display = 'none';
+			}
+
+			// Function to handle click events on loader links
+			function handleLoaderLinkClick(event) {
+				// Check if the clicked element or its parent has the loader-link class
+				if (event.target.classList.contains('loader-link') || event.target.closest('.loader-link')) {
+					// Prevent default link behavior
+					event.preventDefault();
+
+					// Show loader before performing the action
+					showLoader();
+
+					// Redirect or perform action after a short delay
+					setTimeout(function() {
+						// Redirect to the href of the clicked link or perform other action
+
+						setTimeout(function() {
+							hideLoader();
+						}, 2000);
+
+						window.location.href = event.target.href || event.target.closest('.loader-link').href;
+					}, 1000); // Adjust the delay as needed
+				}
+			}
+
+			// Function to handle popstate event (browser back/forward buttons)
+			function handlePopState(event) {
+				// Check if the loader is currently shown
+				if (document.getElementById('modalContainer').style.display === 'flex') {
+					// Hide the loader
+					hideLoader();
+				}
+			}
+
+			// Add event listeners
+			document.addEventListener('click', handleLoaderLinkClick); // Handle clicks on loader links
+			window.addEventListener('popstate', handlePopState); // Handle browser back/forward buttons
+        </script>
     </head>
     <body class="w3-light-gray main">
-        <div class="w3-content" style="max-width: 100%;">
-            <div class="navbar">
-                <a href="../../index.php" style="text-decoration: none;">
-                    <img src="/public/images/banner_top.png" style="width:80%;">
+        <div class="modal-container" id="modalContainer">
+			<div class="modal-background"></div>
+			<div class="loader center-screen"></div>
+		</div>
+
+        <script>
+			document.getElementById('modalContainer').style.display = 'flex';
+		</script>
+
+        <script>
+            setTimeout(function() {
+                setTimeout(function() {
+                    document.getElementById('modalContainer').style.display = 'none';
+                }, 3000);
+                
+                document.getElementById('mainContent').style.display = 'block';
+            }, 3000);
+        </script>
+
+        <div id="mainContent" class="w3-content" style="max-width: 100%;">
+            <div style="background-color: teal; " class="navbar" id="navbar">
+                <a id="home" href="index.php" style="text-decoration: none;">
+                    <img src="/public/images/banner_top.png" style="width:60%;">
+                </a>
+                <a id="blog-link" href="../../../index.php" style="opacity: 0; font-family: 'SF Pro Display', sans-serif; font-size: 22px; padding-top: 16px; margin-top: 6px; font-weight: bold; " class="loader-link">
+                    <span style="font-size: 24px; margin-right: 5px;">&larr;</span> All blog posts
                 </a>
             </div>
+
+            <div style="margin-top: -41.8px"></div>
+
+            <div style="width: 100%; background: linear-gradient(to bottom, teal, #333);">
+				<div id="titlebar" style="height: 42vh; font-family: 'SF Pro Display', sans-serif; color: white; justify-content: center;">
+                    <div style="width: 100%; padding-left: 10%; padding-right: 10%;">
+                        <a id="blog-link" href="../../../index.php" style="font-size: 22px; padding-top: 10px; margin-top: -0.5px; font-weight: bold; " class="loader-link">
+                            <span style="font-size: 24px; margin-right: 5px;">&larr;</span> All blog posts
+                        </a>
+                        <hr>
+                    </div>
+
+                    <div style="font-family: 'SF Pro Display', sans-serif; color: white; display: flex; padding-left: 25%; padding-right: 25%; font-size: 18px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                        width="22px" height="22px" viewBox="0 -5 50 50" version="1.1">
+                            <g id="surface1">
+                            <path style=" stroke:none;fill-rule:nonzero;fill:rgb(255, 255, 255);fill-opacity:1;" 
+                            d="M 25 25 C 30.15625 25 34.375 20.78125 34.375 15.625 C 34.375 10.46875 30.15625 
+                            6.25 25 6.25 C 19.84375 6.25 15.625 10.46875 15.625 15.625 C 15.625 20.78125 19.84375 
+                            25 25 25 Z M 25 29.6875 C 18.789062 29.6875 6.25 32.851562 
+                            6.25 39.0625 L 6.25 43.75 L 43.75 43.75 L 43.75 39.0625 C 43.75 32.851562 31.210938 
+                            29.6875 25 29.6875 Z M 25 29.6875 "/>
+                            </g>
+                        </svg>
+                        <b>segfault.e404</b>
+                        <span class="w3-tag" style="margin-left: 10px; font-family: 'SF Pro Display', sans-serif; font-size: 18px; font-weight: bold;">September 6, 2023</span>
+                    </div>
+
+                    <br><br>
+                    
+                    <div id="blog_article" style="height: 38vh; font-family: 'SF Pro Display', sans-serif; color: white; display: flex; justify-content: center; padding-left: 25% ; padding-right: 25%;">
+                        <p id="title" style="font-size: 38px; margin-top: -0.5px; font-weight: bold; ">
+                            Introduce CyberBlog and the untold stories behind the scenes
+                        </p>
+                    </div>
+				</div>
+			</div>
+
+			<script>
+				function updateBackgroundColorSmooth() {
+					var ticking = false;
+					var lastScrollPosition = 0;
+
+					function requestTick() {
+						if (!ticking) {
+							requestAnimationFrame(updateNavbarBackground);
+							ticking = true;
+						}
+					}
+
+					function updateNavbarBackground() {
+						var scrollPosition = window.scrollY;
+
+						// Only update if the scroll position has changed significantly
+						if (Math.abs(scrollPosition - lastScrollPosition) > 1) {
+							lastScrollPosition = scrollPosition;
+
+							var navbar = document.getElementById('navbar');
+							var titlebar = document.getElementById('titlebar');
+                            var homeLink = document.getElementById('home');
+                            var blogLink = document.getElementById('blog-link');
+
+							var scrollThreshold = window.innerHeight * 0.42; // Adjust 0.38 to change the scroll threshold
+							var scrollPercentage = Math.min(scrollPosition / scrollThreshold, 1);
+
+							// Interpolate between teal and #333 based on scroll percentage
+							var red = Math.round(0x00 + scrollPercentage * (0x33 - 0x00));
+							var green = Math.round(0x80 + scrollPercentage * (0x33 - 0x80));
+							var blue = Math.round(0x80 + scrollPercentage * (0x33 - 0x80));
+
+							var opacity = 1 - Math.min(scrollPosition / (window.innerHeight * 0.24), 1);
+							
+							titlebar.style.color = `rgba(255, 255, 255, ${opacity})`;
+
+							navbar.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+
+                            if (scrollPosition > (window.innerHeight * 0.01)) {
+                                homeLink.style.opacity = '0'; // Fade in the home link
+                                blogLink.style.opacity = '1';
+                                blogLink.style.marginLeft = '16px'; // Move the blog link back to its original position
+                                homeLink.style.marginLeft = '-100000px';
+                            } else {
+                                homeLink.style.opacity = '1'; // Fade out the home link
+                                blogLink.style.opacity = '0'; // Fade out the home link
+                                blogLink.style.marginLeft = '50px'; // Move the blog link to the left
+                                homeLink.style.marginLeft = '16px';
+                            }
+						}
+
+						ticking = false; // Reset the ticking flag
+					}
+
+					return function() {
+						if (!ticking) {
+							requestTick();
+						}
+					};
+				}
+
+				// Attach scroll event listener
+				var smoothBackgroundColorUpdate = updateBackgroundColorSmooth();
+				window.addEventListener('scroll', smoothBackgroundColorUpdate);
+			</script>
+
             <div id="progress-bar"></div>
 
             <!-- Grid -->
             <div class="w3-row">
 
             <!-- Blog entries -->
-            <div class="w3-col l8 s12">
+            <div class="w3-col s12" style="font-size: 16px;">
                 <!-- All blog listed here-->
-                <div class="w3-card-4 w3-margin w3-white">
-                    <img src="/public/images/banner.png" alt="<BLOG THUMBNAIL HERE>" style="width: 100%;">
+                <div class="w3-margin">
                     <div class="w3-container">
-                        <h3><b>Introduce CyberBlog and the untold stories behind the scenes</b></h3>
-                        <h5>
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                            width="20px" height="20px" viewBox="0 -5 50 50" version="1.1">
-                                <g id="surface1">
-                                <path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" 
-                                d="M 25 25 C 30.15625 25 34.375 20.78125 34.375 15.625 C 34.375 10.46875 30.15625 
-                                6.25 25 6.25 C 19.84375 6.25 15.625 10.46875 15.625 15.625 C 15.625 20.78125 19.84375 
-                                25 25 25 Z M 25 29.6875 C 18.789062 29.6875 6.25 32.851562 
-                                6.25 39.0625 L 6.25 43.75 L 43.75 43.75 L 43.75 39.0625 C 43.75 32.851562 31.210938 
-                                29.6875 25 29.6875 Z M 25 29.6875 "/>
-                                </g>
-                            </svg>
-                            segfault.e404
-                            <span class="w3-tag" style="margin-left: 5px;">September 6, 2023</span>
-                        </h5>
                     </div>
                     <div class="w3-container">
-                        <p>
-                            A new journey has officially begun
-                        </p>
-                        
-                        <br />
                         <p><b>
                             Today, September 6, 2023, I'm very proud to annouce to everyone: CyberBlog
                             launched! And to celebrate this memorable milestone, I will tell you the story 
@@ -329,51 +581,6 @@
                 <!-- END BLOG POST PREVIEW CARD -->
             </div>
             <!-- END BLOG ENTRIES -->
-
-            <!-- Introduction menu -->
-            <div class="w3-col l4">
-                <!-- About card -->
-                <div class="w3-card w3-margin w3-margin-top">
-                    <img src="/public/images/banner.png" style="width: 100%;">
-                    <div class="w3-container w3-white">
-                        <h4><b>About us</b></h4>
-                        <p>
-                            We, the leaders of CyberDay Studios, are proud to introduce our blog called CyberBlog.
-                        </p>
-                        <p>
-                            CyberBlog will become the place where we document everything about our projects, tips, 
-                            tricks, and stories as we develop a project. 
-                        </p>
-                        <p>
-                            Stay tuned for the latest tips, tricks,
-                            and notes that will make your life easier and don't forget to read our stories, 
-                            you might find more tips, technical perspectives and other interesting things!
-                        </p>
-                    </div>
-                </div>
-                <hr>
-
-                <!-- Posts -->
-                <div class="w3-card w3-margin">
-                    <div class="w3-container w3-padding">
-                    <h4>Popular Posts</h4>
-                    </div>
-                    <ul class="w3-ul w3-hoverable w3-white">
-                        <p style="margin-left: 16px;">Nothing post right now! Please try again later</p>
-                    </ul>
-                </div>
-                <hr>
-                
-                <!-- Labels / tags -->
-                <div class="w3-card w3-margin">
-                    <div class="w3-container w3-padding">
-                    <h4>Tags</h4>
-                    </div>
-                    <div class="w3-container w3-white">
-                    <p><span class="w3-tag w3-black w3-margin-bottom">announcements</span></p>
-                    </div>
-                </div>
-            </div>
         </div>
     </body>
     <footer class="w3-container w3-padding-48 w3-margin-top">
